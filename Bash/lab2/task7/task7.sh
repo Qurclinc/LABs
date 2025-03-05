@@ -9,8 +9,10 @@ man bash 1>tmp
 declare -A words
 
 while IFS= read -r line; do
-    for word in $( echo "$line" | awk '{for(i=1; i<=NF; i++) {gsub("[^a-zA-Z0-9]", "", $i); print $i }}' ); do
-        (( words["$word"]++ ))
+    for word in $( echo "$line" | awk '{for(i=1; i<=NF; i++) {gsub("[^a-zA-Zа-яА-ЯёЁ0-9]", "", $i); print $i }}' ); do
+        if [[ ${#word} -gt 3 ]]; then
+            (( words["$word"]++ ))
+         fi 
         # echo "${words["$word"]}"
     done
 done < tmp
@@ -25,5 +27,6 @@ for key in $(for k in "${!words[@]}"; do echo "${words[$k]} $k"; done | sort -rn
     echo "$key ${words[$key]}"
     (( count-- ))
 done
+
 
 
