@@ -25,5 +25,5 @@ mov ax, min
 INT 20h
 
 arr dw 14,20,30,10,5,78,52,11,30 ; array itself :p
-len dw 9 ; len of arr
+len dw $-arr ; len of arr
 min dw ?

@@ -42,7 +42,7 @@ jg print_loop ; if cx >= 0 jumps to label
 
 INT 20h
 
-word db "AbobaZalupaLOL"
+word db "AbobaLOL"
 len equ $-word 
 res db 12 dup(0)
 res_len dw ?
@@ -57,7 +57,7 @@ copy PROC
     inc di
     inc si
     dec cx
-    jg copy_loop
+    jg copy_loop ; 
     
     RET
 ENDP    
