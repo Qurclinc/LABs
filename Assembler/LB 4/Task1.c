@@ -13,7 +13,7 @@ int factorial(int x) {
 }
 
 int main() {
-    int A = 5, B = 2, C = 7;
+    int A = 3, B = 4, C = 5;
     int result = factorial(A) + factorial(B) + factorial(C);
     printf("A! + B! + C! = %d + %d + %d = %d\n", factorial(A), factorial(B), factorial(C), result);
     return 0;
