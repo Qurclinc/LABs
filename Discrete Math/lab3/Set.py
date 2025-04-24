@@ -70,10 +70,6 @@ class Set:
             matrix += [tmp]
         return matrix
 
-    @staticmethod
-    def checkReflecsive(universum, set):
-
-
     def __str__(self):
         return "{" + ", ".join(map(str, self.arr)) + "}"
 
