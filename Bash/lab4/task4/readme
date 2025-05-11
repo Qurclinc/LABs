@@ -1,0 +1,13 @@
+For correct work u have to:
+
+sudo apt install make cmake git
+
+and clone this repo:
+git clone https://github.com/opsengine/cpulimit.git
+
+then do:
+cd cpulimit
+make 
+sudo cp src/cpulimit /usr/bin
+
+and now you can use this stuff.

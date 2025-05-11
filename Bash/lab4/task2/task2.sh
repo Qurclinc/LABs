@@ -6,4 +6,4 @@ SCRIPT_NAME="task1.sh"
 REPORT="$SOURCE_LOCATION/report"
 echo "cd $SOURCE_LOCATION && ./$SCRIPT_NAME" | at now + 2 minute
 
-tail -f $REPORT
+tail -n 0 -f $REPORT
