@@ -23,7 +23,7 @@ def main():
     a = 20 # 0 <= a < m; множитель
     c = 35 # 0 <= c < m; приращение
     seed = 4 # X0
-    word = "aboba"
+    word = input()
     print(f"Source word: {word}")
     b_word = get_bytes(word)
     print(f"Source bytes:\t {b_word}")

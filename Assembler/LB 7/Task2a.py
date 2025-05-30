@@ -12,11 +12,11 @@ def do_crypt(b_word, gamma):
     return " ".join(res)
 
 def main():
-    word = "aboba"
+    word = input()
     print(f"Source word: {word}")
     b_word = get_bytes(word)
     print(f"Source bytes:\t {b_word}")
-    gamma = "00110011"
+    gamma = input()
     print(f"Gamma:\t\t {gamma}")
     encrypted_bytes = do_crypt(b_word, gamma)
     print(f"Encrypted bytes: {encrypted_bytes}")
