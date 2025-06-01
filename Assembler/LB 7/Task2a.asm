@@ -5,7 +5,12 @@ ORG 100h
     lea dx, input_text ; and it has to be into dx
     INT 21h            ; summons console 
     
-    CALL print_newline
+    CALL print_newline    
+    
+    mov bx, 0 ; for safety
+    mov bl, [input_text + 1]
+    mov real_length, bx
+    mov bx, 0 ; for safety
            
     ; input gamma       
     mov ah, 0Ah
@@ -23,9 +28,8 @@ ORG 100h
     CALL do_crypt
     
     ; adding '$' as it got damaged (somewhy...)
-    mov bl, [input_text + 1] ; len of string (as enc=src)
     lea di, encrypted_text ; string
-    add di, bx ; len(string) + 1 sym should be '$'
+    add di, real_length ; len(string) + 1 sym should be '$'
     mov byte ptr [di], '$'  ; and its done
     
     ; printing it out       
@@ -116,9 +120,10 @@ print_newline PROC
 ENDP
 
 
-length            dw 15
+real_length       dw ?
+length            dw 255
 gamma             db 8, 0, 8 dup('$')
-input_text        db 15, 0, 15 dup('$')
+input_text        db 255, 0, 255 dup('$')
 encrypted_text    db length dup('$')
 decrypted_text    db length dup('$')
 encrypt_label     db "Encrypted: ", '$'

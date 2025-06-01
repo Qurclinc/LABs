@@ -16,7 +16,7 @@ def main():
     print(f"Source word: {word}")
     b_word = get_bytes(word)
     print(f"Source bytes:\t {b_word}")
-    gamma = input()
+    gamma = input()[:8]
     print(f"Gamma:\t\t {gamma}")
     encrypted_bytes = do_crypt(b_word, gamma)
     print(f"Encrypted bytes: {encrypted_bytes}")

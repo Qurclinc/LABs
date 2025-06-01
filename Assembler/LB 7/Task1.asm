@@ -91,9 +91,9 @@ print_newline PROC
 ENDP
 
 
-length dw 15
-input_text        db 15, 0, 15 dup('$')
+length            dw 255
+input_text        db 255, 0, 255 dup('$')
 encrypted_text    db length dup('$')
 decrypted_text    db length dup('$')
-encrypt_label   db "Encrypted: ", '$'
+encrypt_label     db "Encrypted: ", '$'
 decrypt_label     db "Decrypted: ", '$'

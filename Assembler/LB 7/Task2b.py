@@ -20,9 +20,9 @@ def get_gamma(m, a, c, seed, n):
 
 def main():
     m = 90 # m > 0; модуль
-    a = 20 # 0 <= a < m; множитель
-    c = 35 # 0 <= c < m; приращение
-    seed = 4 # X0
+    a = 25 # 0 <= a < m; множитель
+    c = 55 # 0 <= c < m; приращение
+    seed = 10 # X0
     word = input()
     print(f"Source word: {word}")
     b_word = get_bytes(word)
