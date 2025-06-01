@@ -14,26 +14,11 @@ ORG 100h
     mov bl, [input_text + 1]
     mov real_length, bx
     mov bx, 0 ; for safety
-           
-    ; input gamma       
-    ;mov ah, 0Ah
-    ;lea dx, gamma ; and it has to be into dx
-    ;INT 21h            ; summons console 
-    
-    ;CALL print_newline
-    
-    ;lea di, gamma + 2
-    ;CALL bin_to_dec ; translate to dec to correct XOR
     
     ; encrypting
     lea di, input_text + 2
     lea si, encrypted_text
     CALL do_crypt
-    
-    ; adding '$' as it got damaged (somewhy...)
-    lea di, encrypted_text ; string
-    add di, real_length ; len(string) + 1 sym should be '$'
-    mov byte ptr [di], '$'  ; and its done
     
     ; printing it out       
     mov ah, 09h ; 09h - instruction to print out line
@@ -60,12 +45,12 @@ ORG 100h
     lea dx, decrypted_text
     INT 21h
                      
-stop_it:
 INT 20h
 
 do_crypt proc
     push X0_backup
-    pop X0    
+    pop X0
+    mov cx, real_length    
 while:
     ; lets find some gamma xD
     push X0
@@ -78,7 +63,7 @@ while:
      
     ; now its decimal anyway SOO its even easier!
     mov al, [di] ; byte from di
-    cmp al, '$'  ; if line is over - break :)
+    cmp cx, 0  ; if line is over - break :)
     je break     
     
     xor al, dl   ; just XOR. nothing interesting :O
@@ -87,6 +72,7 @@ while:
     mov [si], al ; now in al swapped bits so lets clone them into si
     inc di       ; simple increment for getting further
     inc si       ; OwO
+    dec cx
     jmp while    ; do it until its done w_w
 
 break:

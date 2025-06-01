@@ -27,11 +27,6 @@ ORG 100h
     lea si, encrypted_text
     CALL do_crypt
     
-    ; adding '$' as it got damaged (somewhy...)
-    lea di, encrypted_text ; string
-    add di, real_length ; len(string) + 1 sym should be '$'
-    mov byte ptr [di], '$'  ; and its done
-    
     ; printing it out       
     mov ah, 09h ; 09h - instruction to print out line
     lea dx, encrypt_label
@@ -88,9 +83,10 @@ stop:
 ENDP
 
 do_crypt proc
+    mov bx, real_length
 while:
     mov al, [di] ; byte from di
-    cmp al, '$'  ; if line is over - break :)
+    cmp bx, 0  ; if line is over - break :)
     je break     
     
     xor al, cl   ; just XOR. nothing interesting :O
@@ -99,6 +95,7 @@ while:
     mov [si], al ; now in al swapped bits so lets clone them into si
     inc di       ; simple increment for getting further
     inc si       ; OwO
+    dec bx
     jmp while    ; do it until its done w_w
 
 break:
