@@ -1,3 +1,5 @@
+include 'emu8086.inc'
+
 ORG 100h
     
     ; input text  
@@ -31,10 +33,12 @@ ORG 100h
     mov ah, 09h ; 09h - instruction to print out line
     lea dx, encrypt_label
     INT 21h
-    
-    mov ah, 09h
-    lea dx, encrypted_text
-    INT 21h
+     
+    lea si, encrypted_text
+    CALL PRINT_STRING 
+    ;mov ah, 09h
+    ;lea dx, encrypted_text
+    ;INT 21h
     
     ; decrypting
     lea di, encrypted_text ; source text uwu
@@ -48,13 +52,14 @@ ORG 100h
     lea dx, decrypt_label
     INT 21h
     
-    mov ah, 09h
-    lea dx, decrypted_text
-    INT 21h
+    
+    lea si, decrypted_text
+    CALL PRINT_STRING
                      
 
 INT 20h
-
+  
+  
 bin_to_dec proc  
     lea si, gamma + 1  ; here stores current length
     mov cl, [si] ; actual length of gamma!
@@ -99,7 +104,7 @@ while:
     jmp while    ; do it until its done w_w
 
 break:
-    mov byte ptr [si], '$' ; adding marker that line is finished
+    ;mov byte ptr [si], '$' ; adding marker that line is finished
     RET
 ENDP
 
@@ -121,7 +126,9 @@ real_length       dw ?
 length            dw 255
 gamma             db 8, 0, 8 dup('$')
 input_text        db 255, 0, 255 dup('$')
-encrypted_text    db length dup('$')
-decrypted_text    db length dup('$')
+encrypted_text    db length dup(0)
+decrypted_text    db length dup(0)
 encrypt_label     db "Encrypted: ", '$'
 decrypt_label     db "Decrypted: ", '$'
+
+DEFINE_PRINT_STRING

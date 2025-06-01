@@ -1,3 +1,5 @@
+include 'emu8086.inc'
+
 ORG 100h
       
     mov ah, 0Ah ; 0Ah - instruction to enter a line
@@ -5,6 +7,11 @@ ORG 100h
     INT 21h            ; summons console 
     
     CALL print_newline
+    
+    mov bx, 0 ; for safety
+    mov bl, [input_text + 1]
+    mov real_length, bx
+    mov bx, 0 ; for safety
                  
     ; encrypting             
     lea di, input_text + 2 ; source text uwu
@@ -16,9 +23,8 @@ ORG 100h
     lea dx, encrypt_label
     INT 21h
     
-    mov ah, 09h
-    lea dx, encrypted_text
-    INT 21h
+    lea si, encrypted_text
+    CALL PRINT_STRING
     
     ; decrypting
     lea di, encrypted_text ; source text uwu
@@ -32,9 +38,9 @@ ORG 100h
     lea dx, decrypt_label
     INT 21h
     
-    mov ah, 09h
-    lea dx, decrypted_text
-    INT 21h
+    
+    lea si, decrypted_text
+    CALL PRINT_STRING
                      
 
     
@@ -42,9 +48,10 @@ ORG 100h
 INT 20h
 
 do_crypt proc
+    mov cx, real_length
 while:
     mov al, [di] ; byte from di
-    cmp al, '$'  ; if line is over - break :)
+    cmp cx, 0  ; if line is over - break :)
     je break
 
     mov bl, al   ; copy symbol to bl and bh
@@ -70,10 +77,10 @@ while:
     mov [si], al ; now in al swapped bits so lets clone them into si
     inc di       ; simple increment for getting further
     inc si       ; OwO
+    dec cx
     jmp while    ; do it until its done w_w
 
 break:
-    mov byte ptr [si], '$' ; adding marker that line is finished
     RET
 ENDP
 
@@ -90,10 +97,13 @@ print_newline PROC
     RET
 ENDP
 
-
+real_length       dw ?
 length            dw 255
 input_text        db 255, 0, 255 dup('$')
-encrypted_text    db length dup('$')
-decrypted_text    db length dup('$')
+encrypted_text    db length dup(0???)
+decrypted_text    db length dup(0)
 encrypt_label     db "Encrypted: ", '$'
 decrypt_label     db "Decrypted: ", '$'
+
+
+DEFINE_PRINT_STRING

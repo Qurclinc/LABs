@@ -1,3 +1,5 @@
+include 'emu8086.inc'
+
 ORG 100h
     
     push X0 ; as we get X0 damaged during crypt we need to save it
@@ -25,9 +27,9 @@ ORG 100h
     lea dx, encrypt_label
     INT 21h
     
-    mov ah, 09h
-    lea dx, encrypted_text
-    INT 21h
+    
+    lea si, encrypted_text
+    CALL PRINT_STRING
     
     ; decrypting
     lea di, encrypted_text ; source text uwu
@@ -41,9 +43,9 @@ ORG 100h
     lea dx, decrypt_label
     INT 21h
     
-    mov ah, 09h
-    lea dx, decrypted_text
-    INT 21h
+    
+    lea si, decrypted_text
+    CALL PRINT_STRING
                      
 INT 20h
 
@@ -76,7 +78,7 @@ while:
     jmp while    ; do it until its done w_w
 
 break:
-    mov byte ptr [si], '$' ; adding marker that line is finished
+    ;mov byte ptr [si], '$' ; adding marker that line is finished
     RET
 ENDP
 
@@ -96,10 +98,9 @@ ENDP
 
 real_length       dw ?
 length            dw 255
-gamma             db 8, 0, 8 dup('$')
 input_text        db 255, 0, 255 dup('$')
-encrypted_text    db length dup('$')
-decrypted_text    db length dup('$')
+encrypted_text    db length dup(0)
+decrypted_text    db length dup(0)
 encrypt_label     db "Encrypted: ", '$'
 decrypt_label     db "Decrypted: ", '$'
 
@@ -109,3 +110,5 @@ c                 dw 55
 X0                dw 10
 X0_backup         dw ?
 X                 dw ?
+
+DEFINE_PRINT_STRING
