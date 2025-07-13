@@ -11,3 +11,18 @@ make
 sudo cp src/cpulimit /usr/bin
 
 and now you can use this stuff.
+
+troubleshooting:
+if you've got a trouble with installing cmake on Astra 1.8 version, here are steps that could help you.
+
+```
+echo '# Основной репозиторий
+deb https://dl.astralinux.ru/astra/frozen/1.8_x86-64/1.8.1/uu/2/main-repository/ 1.8_x86-64 contrib main non-free non-free-firmware
+# Расширенный репозиторий
+deb https://dl.astralinux.ru/astra/frozen/1.8_x86-64/1.8.1/uu/2/extended-repository/ 1.8_x86-64 contrib main non-free non-free-firmware' | sudo tee aboba.txt
+```
+and
+`sudo apt update`
+everyting should work fine.
+
+
