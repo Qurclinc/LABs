@@ -7,6 +7,3 @@ result=$(crontab -l | grep "$COMMAND")
 if [[ -z $result ]]; then
     ( crontab -l; echo "* * * * * /bin/bash -c $LOCATION") | crontab -
 fi
-
-
-# ( crontab -l; echo "* * * * * /bin/bash -c $LOCATION") | crontab -
