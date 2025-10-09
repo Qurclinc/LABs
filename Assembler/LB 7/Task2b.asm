@@ -106,8 +106,8 @@ decrypt_label     db "Decrypted: ", '$'
 
 m                 dw 90
 a                 dw 25
-c                 dw 55
-X0                dw 10
+c                 dw 10
+X0                dw 4
 X0_backup         dw ?
 X                 dw ?
 

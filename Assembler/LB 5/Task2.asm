@@ -42,7 +42,7 @@ jg print_loop ; if cx >= 0 jumps to label
 
 INT 20h
 
-word db "AbobaLOL"
+word db "Aboba"
 len equ $-word 
 res db 12 dup(0)
 res_len dw ?

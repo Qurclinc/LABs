@@ -3,112 +3,92 @@ include 'emu8086.inc'
 ORG 100h
     
     ; input text  
-    mov ah, 0Ah ; 0Ah - instruction to enter a line
-    lea dx, input_text ; and it has to be into dx
-    INT 21h            ; summons console 
+    mov ah, 0Ah
+    lea dx, input_text
+    int 21h
     
     CALL print_newline    
     
-    mov bx, 0 ; for safety
+    ; save text length
     mov bl, [input_text + 1]
-    mov real_length, bx
-    mov bx, 0 ; for safety
-           
+    mov [real_length], bx
+    
     ; input gamma       
     mov ah, 0Ah
-    lea dx, gamma ; and it has to be into dx
-    INT 21h            ; summons console 
+    lea dx, gamma
+    int 21h
     
     CALL print_newline
     
-    lea di, gamma + 2
-    CALL bin_to_dec ; translate to dec to correct XOR
+    ; save gamma length
+    mov bl, [gamma + 1]
+    mov [gamma_len], bx
     
-    ; encrypting
-    lea di, input_text + 2
-    lea si, encrypted_text
-    CALL do_crypt
+    ; encrypt
+    lea si, input_text + 2  ; source text
+    lea di, gamma + 2       ; gamma key
+    lea bx, encrypted_text  ; destination
+    call do_crypt
     
-    ; printing it out       
-    mov ah, 09h ; 09h - instruction to print out line
+    ; printing it out
+    mov ah, 09h
     lea dx, encrypt_label
-    INT 21h
+    int 21h
      
     lea si, encrypted_text
-    CALL PRINT_STRING 
-    ;mov ah, 09h
-    ;lea dx, encrypted_text
-    ;INT 21h
+    call PRINT_STRING 
     
-    ; decrypting
-    lea di, encrypted_text ; source text uwu
-    lea si, decrypted_text ; res text x_x
-    CALL do_crypt
+    ; decrypt
+    lea si, encrypted_text  ; source
+    lea di, gamma + 2       ; gamma key
+    lea bx, decrypted_text  ; destination
+    call do_crypt
     
     CALL print_newline    
     
-    ; printing it out       
-    mov ah, 09h ; 09h - instruction to print out line
+    ; printing it out
+    mov ah, 09h
     lea dx, decrypt_label
-    INT 21h
-    
+    int 21h
     
     lea si, decrypted_text
-    CALL PRINT_STRING
+    call PRINT_STRING
                      
-
 INT 20h
-  
-  
-bin_to_dec proc  
-    lea si, gamma + 1  ; here stores current length
-    mov cl, [si] ; actual length of gamma!
-    mov ax, 0  ; initial zero
-    mov ch, 2  ; for multiplying
-for:
-    mov bl, [di] ; current symbol
-    dec cl ; counter  
-    
-    cmp bl, '1' ; if bit == 1 lets add it :p other way no. :(
-    je add_one
-    jne dont_add_one
-    
-add_one:
-    add ax, 1
-dont_add_one:
-    cmp cl, 0 ; if len is 0 we shouldn't *2
-    je stop
-    mul ch  ; *2 for each bit
-    inc di ; go to next symbol
-    
-    jmp for     
-stop: 
-    mov cl, al ; saving to cl got decimal number  
-    RET
-ENDP
 
-do_crypt proc
-    mov bx, real_length
+
+do_crypt PROC
+    mov cx, [real_length] ; length of text
+    pusha                 ; saving all registers
+    mov [gamma_start], di ; save original gamma pointer
+    
 while:
-    mov al, [di] ; byte from di
-    cmp bx, 0  ; if line is over - break :)
-    je break     
+    mov al, [si]         ; source text symbol
+    mov ah, [di]         ; gamma symbol
     
-    xor al, cl   ; just XOR. nothing interesting :O
+    cmp ah, 13           ; check if gamma ended up (noting there)
+    jne restart       ; if its ended lets start from the beggining
+    mov di, [gamma_start] ; reset gamma to start
+    mov ah, [di]
+        
+restart:
+    xor al, ah           ; encrypt/decrypt
+    mov [bx], al         ; store result
     
-
-    mov [si], al ; now in al swapped bits so lets clone them into si
-    inc di       ; simple increment for getting further
-    inc si       ; OwO
-    dec bx
-    jmp while    ; do it until its done w_w
-
-break:
-    ;mov byte ptr [si], '$' ; adding marker that line is finished
+    inc si               ; next text symbol
+    inc di               ; next gamma symbol
+    inc bx               ; next output byte
+    dec cx               ; iterator
+    cmp cx, 0            ; if its over - break
+    je break
+    jmp while
+break:    
+    popa
     RET
 ENDP
 
- 
+
+
 print_newline PROC   
     
     mov dl, 0Dh ; carrige return
@@ -122,13 +102,20 @@ print_newline PROC
 ENDP
 
 
-real_length       dw ?
-length            dw 255
-gamma             db 8, 0, 8 dup('$')
-input_text        db 255, 0, 255 dup('$')
-encrypted_text    db length dup(0)
-decrypted_text    db length dup(0)
-encrypt_label     db "Encrypted: ", '$'
-decrypt_label     db "Decrypted: ", '$'
+
+
+length         dw 255
+real_length    dw ?
+gamma_len      dw ?
+gamma_start    dw ?
+
+input_text     db 255, 0, 255 dup('$')
+gamma          db 255, 0, 255 dup('$')
+encrypted_text db length dup(0)
+decrypted_text db length dup(0)
+
+encrypt_label  db "Encrypted: ", '$'
+decrypt_label  db "Decrypted: ", '$'
 
 DEFINE_PRINT_STRING
+
