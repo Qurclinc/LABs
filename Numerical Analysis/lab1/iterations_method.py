@@ -3,9 +3,9 @@ from math import sqrt, sin, cos
 def phi(x: float) -> float:
     return 1 / sqrt(x + 1)
 
-def phi(x: float) -> float:
-    U = 0.4125
-    return x - U * (sqrt(x + 1) - (1 / x))
+# def phi(x: float) -> float:
+#     U = 0.4125
+#     return x - U * (sqrt(x + 1) - (1 / x))
 
 # def phi(x: float) -> float:
 #     U = 0.0769
