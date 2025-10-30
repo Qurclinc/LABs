@@ -3,14 +3,17 @@ from math import sqrt, sin
 # def f(x: float) -> float:
 #     return sqrt(x + 1) - (1 / x)
 
-def f(x: float) -> float:
-    return x ** 2 - 10 * sin(x)
+# def f(x: float) -> float:
+#     return x ** 2 - 10 * sin(x)
+
+def f(x):
+    return (x + 2.01) ** 3
 
 def print_info(n: int, a: float, b: float, c: float):
     print(f"{step - 1:<5}\t{a:<12.8f}\t{c:<12.8f}\t{b:<12.8f}\t{f(a):<12.8f}\t{f(c):<12.8f}\t{f(b):<12.8f}\t{abs(a-b):<12.8f}")
 
 step = 0
-def bisections_method(left: float, right: float, E: float = 10**-6):
+def bisections_method(left: float, right: float, E: float = 10**-1):
     global step
     step += 1
     middle = (left + right) / 2
@@ -24,4 +27,4 @@ def bisections_method(left: float, right: float, E: float = 10**-6):
     
         
 if __name__ == "__main__":
-    bisections_method(2.4, 2.5)
+    bisections_method(-3, -1)
