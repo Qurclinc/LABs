@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.*;
 
@@ -21,7 +20,7 @@ public class Task1 {
         //     .filter(x -> x.getID() == i)
         //     .mapToInt(x -> x.getDuration())
         //     .sum();
-        //     output.put(i, sum);
+           //     output.put(i, sum);
         // }
 
         Map<Integer, Integer> output = clients.stream()
