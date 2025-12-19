@@ -83,6 +83,7 @@ def main():
     print("\n\n\n")
     x0 = b.copy()
     # x0 = np.array([1.0, 1.0, 1.0, 1.0])
+    # x0 = np.zeros(len(b))
     solution, history = jacobi(A, b, x0)
     print(f"\n\nРешение системы:\n")
     for i, val in enumerate(solution):

@@ -15,22 +15,22 @@ def check_rows(A: np.ndarray, b: np.ndarray):
 
     print(f"\nИтог по строкам: Диагональное преобладание — {'ДА' if row_dominance else 'НЕТ'}")
 
-def check_cols(A: np.ndarray, b: np.ndarray):
-    print("\n\n2. Проверка диагонального преобладания по СТОЛБЦАМ:")
-    col_dominance = True
-    N = len(A[0])
+# def check_cols(A: np.ndarray, b: np.ndarray):
+#     print("\n\n2. Проверка диагонального преобладания по СТОЛБЦАМ:")
+#     col_dominance = True
+#     N = len(A[0])
     
-    for i in range(N):
-        diag_elem = abs(A[i, i])
-        # col_sum = np.sum(np.abs(A[:, j])) - diag_elem
-        col_sum = sum([abs(A[j][i]) for j in range(N)]) - diag_elem
+#     for i in range(N):
+#         diag_elem = abs(A[i, i])
+#         # col_sum = np.sum(np.abs(A[:, j])) - diag_elem
+#         col_sum = sum([abs(A[j][i]) for j in range(N)]) - diag_elem
         
-        condition = diag_elem > col_sum
-        col_dominance = col_dominance and condition
+#         condition = diag_elem > col_sum
+#         col_dominance = col_dominance and condition
         
-        print(f"Столбец {i+1}: |{A[i, i]:4}| = {diag_elem:3} > {col_sum:3} = Σ|остальные|? {'ДА' if condition else 'НЕТ'}")
+#         print(f"Столбец {i+1}: |{A[i, i]:4}| = {diag_elem:3} > {col_sum:3} = Σ|остальные|? {'ДА' if condition else 'НЕТ'}")
 
-    print(f"\nИтог по столбцам: Диагональное преобладание — {'ДА' if col_dominance else 'НЕТ'}")
+#     print(f"\nИтог по столбцам: Диагональное преобладание — {'ДА' if col_dominance else 'НЕТ'}")
 
 def main():
     A = np.array([
@@ -42,7 +42,7 @@ def main():
 
     b = np.array([-142, 83, -121, 85])
     check_rows(A, b)
-    check_cols(A, b)
+    # check_cols(A, b)
 
 
 if __name__ == "__main__":
