@@ -1,0 +1,9 @@
+.vscode
+.idea
+.env
+
+__pycache__/
+*.py[oc]
+
+node_modules
+test.py
