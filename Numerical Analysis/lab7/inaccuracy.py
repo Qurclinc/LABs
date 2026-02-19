@@ -29,14 +29,14 @@ def find_extrema_scipy(d):
     
     # 1. Находим максимум |f'(x)|
     result_max = minimize_scalar(lambda x: -abs_f_prime(x), 
-                                 bounds=(3, 4), 
-                                 method='bounded')
+                                bounds=(3, 4), 
+                                method='bounded')
     M1 = abs_f_prime(result_max.x)
     
     # 2. Находим минимум f'(x)
     result_min = minimize_scalar(f_prime_num, 
-                                 bounds=(3, 4), 
-                                 method='bounded')
+                                bounds=(3, 4), 
+                                method='bounded')
     m1 = f_prime_num(result_min.x)
     
     print("Результаты (scipy):")

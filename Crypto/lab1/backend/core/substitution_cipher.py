@@ -14,7 +14,7 @@ def crypt(
     literals = ALPHABET[lang]
     alpha_length = len(literals)
     
-    if len(key) != alpha_length:
+    if len(set(key)) != alpha_length:
         raise KeyError
     
     result = ""
