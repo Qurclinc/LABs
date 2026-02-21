@@ -21,7 +21,10 @@ def crypt(
     if mode == "decrypt":
         key, literals = literals, key
         
-    for char in plain_text:
-        result += literals[key.index(char)]
+    for char in plain_text.lower():
+        if char not in literals:
+            result += char
+        else:
+            result += key[literals.index(char)]
         
     return result
