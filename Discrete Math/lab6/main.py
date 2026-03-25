@@ -4,7 +4,7 @@ import numpy as np
 import networkx as nx
 from collections import deque
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QLineEdit, QPushButton, QTextEdit,
-                             QVBoxLayout, QHBoxLayout, QMessageBox)
+                                 QVBoxLayout, QHBoxLayout, QMessageBox)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
