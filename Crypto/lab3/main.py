@@ -70,8 +70,14 @@ def main():
         ciphertexts.append(row)
 
     p_m = np.full(len_alphabet, 1 / len_alphabet)
-    p_k_gen = np.random.rand(keys_amount)
-    p_k = p_k_gen / p_k_gen.sum()
+    
+    # Equal chance
+    p_k_gen = np.ones(keys_amount)
+    p_k = p_k_gen / keys_amount
+    
+    # Random chance
+    # p_k_gen = np.random.rand(keys_amount)
+    # p_k = p_k_gen / p_k_gen.sum()
     
     
     # p(c)
@@ -105,7 +111,7 @@ def main():
     leak = h_m + h_k - h_c
     
     do_report(
-        "lab3_report.txt",
+        "lab3_report2.txt",
         cipher_matrix=ciphertexts,
         p_m_c=p_m_c,
         p_c_m=p_c_m,

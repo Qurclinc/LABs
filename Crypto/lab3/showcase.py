@@ -85,8 +85,8 @@ def main():
     p_m_c = np.zeros((len_alphabet, len_alphabet))
     for i in range(len_alphabet):
         for j in range(len_alphabet):
-            # print(p_m[i], p_c_m[i][j], p_c[j])
             value = p_m[i] * p_c_m[i][j] / p_c[j]
+            print(f"{p_m[i]} * {p_c_m[i][j]} / {p_c[j]} = {value}")
             p_m_c[i][j] = value
     
     
