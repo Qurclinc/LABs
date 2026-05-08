@@ -1,0 +1,1 @@
+secret.zip/flag.txt:$pkzip2$1*2*2*0*2b*1f*da3403ff*0*42*0*2b*da34*bf7c*ed216c336799d70d950a4d7c82aaa187af8517e5d6dc7d173fcafeee8aefcbe2afe8b2d785b1ca6e23b526*$/pkzip2$:flag.txt:secret.zip::secret.zip

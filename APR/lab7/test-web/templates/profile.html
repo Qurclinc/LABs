@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="hero">
+    <h1>Access Granted</h1>
+    <p class="subtitle">session active</p>
+</div>
+
+<div class="panel">
+    <h2>User Profile</h2>
+
+    <p><strong>login:</strong> {{ current_user.login }}</p>
+
+    <div style="margin-top:20px;">
+        <a class="btn danger" href="{{ url_for('index.logout') }}">
+            terminate session
+        </a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+version: '3.0'
+
+services:
+  ssh-container:
+    container_name: ssh-container
+    build: .
+    ports:
+      - "2222:22"
+      
