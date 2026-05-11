@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+    @apply bg-bg text-text min-h-screen;
+    font-family: 'Segoe UI', 'Fira Code', 'Courier New', monospace;
+}
+
+.text-neon-blue {
+    text-shadow: 0 0 1px #7aa2f7, 0 0 8px #7aa2f7;
+}
+
+.text-neon-green {
+    text-shadow: 0 0 1px #9ece6a, 0 0 8px #9ece6a;
+}
+
+.text-neon-red {
+    text-shadow: 0 0 1px #f7768e, 0 0 8px #f7768e;
+}
+
+.text-neon-purple {
+    text-shadow: 0 0 1px #bb9af7, 0 0 8px #bb9af7;
+}
