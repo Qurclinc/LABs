@@ -1,80 +1,150 @@
 package api
 
 import (
+	"fmt"
 	"math/big"
 	"math/rand"
 	"time"
 )
+
+var source = rand.New(rand.NewSource(time.Now().UTC().UnixNano()))
 
 func Unpack(src []int64, dst ...*int64) {
 	for i, value := range dst {
 		*value = src[i]
 	}
 }
+
 func RandBigInt(min *big.Int, max *big.Int) *big.Int {
-	source := rand.New(rand.NewSource(time.Now().UTC().UnixNano()))
 	return big.NewInt(0).Add(min, big.NewInt(0).Rand(source, big.NewInt(0).Add(big.NewInt(0).Sub(max, min), big.NewInt(1))))
 }
 
-func NthRoot(n *big.Int, k int64) (root *big.Int, rem *big.Int) {
-	var (
-		n0    = big.NewInt(0)
-		n1    = big.NewInt(1)
-		kk    = big.NewInt(k)
-		kMin1 = big.NewInt(k - 1)
-	)
+func ArePairwiseCoprime(coeffs [][]string) bool {
 
-	if n.Sign() == 0 {
-		return big.NewInt(0), big.NewInt(0)
+	for i := 0; i < len(coeffs); i++ {
+		m1, _ := new(big.Int).SetString(coeffs[i][2], 10)
+
+		for j := i + 1; j < len(coeffs); j++ {
+			m2, _ := new(big.Int).SetString(coeffs[j][2], 10)
+
+			line := findEEABig(m1, m2)
+			gcd := line[len(line)-1][0]
+			if gcd != "1" {
+				return false
+			}
+		}
 	}
-	if k == 1 {
-		return new(big.Int).Set(n), n0
+	return true
+}
+
+func PrimeFactors(N big.Int, factors *[]big.Int) {
+	n := new(big.Int).Set(&N)
+	zero := big.NewInt(0)
+	one := big.NewInt(1)
+	two := big.NewInt(2)
+	if new(big.Int).Mod(n, two).Cmp(zero) == 0 {
+		*factors = append(*factors, *big.NewInt(2))
+	}
+	for {
+		if new(big.Int).Mod(n, two).Cmp(zero) != 0 {
+			break
+		}
+		n.Div(n, two)
 	}
 
-	shift := (n.BitLen() + int(k) - 1) / int(k)
-	guess := new(big.Int).Lsh(big.NewInt(1), uint(shift))
+	var limit big.Int
+	for i := big.NewInt(3); i.Cmp(limit.Sqrt(n).Add(&limit, one)) <= 0; i.Add(i, two) {
+		if new(big.Int).Mod(n, i).Cmp(zero) == 0 {
+			*factors = append(*factors, *new(big.Int).Set(i))
+		}
+		for {
+			if new(big.Int).Mod(n, i).Cmp(zero) != 0 {
+				break
+			}
+			n.Div(n, i)
+		}
+	}
 
-	var (
-		guessPowK_1 = new(big.Int)
-		cube        = new(big.Int)
-		dx          = new(big.Int)
-		absDx       = new(big.Int)
-		minDx       = new(big.Int).Abs(n)
-		fx          = new(big.Int)
-		fxp         = new(big.Int)
-		step        = new(big.Int)
-	)
+	if n.Cmp(two) == 1 {
+		*factors = append(*factors, *n)
+	}
+}
+
+func PrimePowers(n *big.Int) []*big.Int {
+	result := []*big.Int{}
+	tmp := new(big.Int).Set(n)
+	i := big.NewInt(2)
+
+	for tmp.Cmp(big.NewInt(1)) > 0 {
+		count := 0
+		for new(big.Int).Mod(tmp, i).Cmp(big.NewInt(0)) == 0 {
+			tmp.Div(tmp, i)
+			count++
+		}
+
+		if count > 0 {
+			pow := new(big.Int).Exp(i, big.NewInt(int64(count)), nil)
+			result = append(result, pow)
+		}
+
+		i.Add(i, big.NewInt(1))
+	}
+
+	return result
+}
+
+func DecomposeOfTwo(n *big.Int) (big.Int, big.Int) {
+	N := new(big.Int).Set(n)
+	zero := big.NewInt(0)
+	one := big.NewInt(1)
+	two := big.NewInt(2)
+	var s big.Int
+	for {
+		if new(big.Int).Mod(N, two).Cmp(zero) != 0 {
+			break
+		}
+		N.Div(N, two)
+		s.Add(&s, one)
+	}
+	return s, *N
+}
+
+func FindM(B, P *big.Int) *big.Int {
+	one := big.NewInt(1)
+	two := big.NewInt(2)
+
+	b := new(big.Int).Set(B)
+	p := new(big.Int).Set(P)
+	m := big.NewInt(1)
 
 	for {
-		cube.Exp(guess, kk, nil)
-		dx.Sub(n, cube)
-		cmp := dx.Cmp(n0)
-		if cmp == 0 {
-			return guess, n0
+		exp := new(big.Int).Exp(two, m, nil)
+		res := new(big.Int).Exp(b, exp, p)
+		if res.Cmp(one) == 0 {
+			break
 		}
-
-		fx.Sub(cube, n)
-		guessPowK_1.Exp(guess, kMin1, nil)
-		fxp.Mul(kk, guessPowK_1)
-		step.Div(fx, fxp)
-		if step.Cmp(n0) == 0 {
-			step.Set(n1)
-		}
-
-		absDx.Abs(dx)
-		switch absDx.Cmp(minDx) {
-		case -1:
-			minDx.Set(absDx)
-		case 0:
-
-			if cube.Cmp(n) > 0 {
-				guess.Sub(guess, n1)
-				cube.Exp(guess, kk, nil)
-				dx.Sub(n, cube)
-			}
-			return guess, dx
-		}
-
-		guess.Sub(guess, step)
+		m.Add(m, one)
 	}
+
+	return m
+}
+
+// ----------- Validations ----------------
+
+func ParsePositiveBigInt(s string) (*big.Int, error) {
+	n, ok := new(big.Int).SetString(s, 10)
+	if !ok {
+		return nil, fmt.Errorf("invalid number")
+	}
+	if n.Sign() <= 0 {
+		return nil, fmt.Errorf("n must be positive")
+	}
+	return n, nil
+}
+
+func ValidateK(k int64) error {
+	if k <= 0 {
+		return fmt.Errorf("k must be > 0")
+	}
+	return nil
 }

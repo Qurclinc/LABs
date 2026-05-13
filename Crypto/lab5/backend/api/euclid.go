@@ -2,6 +2,7 @@ package api
 
 import (
 	"math"
+	"math/big"
 	"sort"
 
 	mapset "github.com/deckarep/golang-set/v2"
@@ -9,8 +10,8 @@ import (
 )
 
 type eeaData struct {
-	A int64
-	B int64
+	A string
+	B string
 }
 
 type geaData struct {
@@ -24,7 +25,10 @@ func HandleFindEEA(c *gin.Context) {
 		return
 	}
 
-	res := findEEA(postData.A, postData.B)
+	a, _ := new(big.Int).SetString(postData.A, 10)
+	b, _ := new(big.Int).SetString(postData.B, 10)
+
+	res := findEEABig(a, b)
 	c.JSON(200, res)
 }
 
@@ -32,6 +36,12 @@ func HandleFindGEA(c *gin.Context) {
 	var postData geaData
 
 	if err := c.BindJSON(&postData); err != nil {
+		c.JSON(400, gin.H{"error": "invalid json"})
+		return
+	}
+
+	if len(postData.List) == 0 {
+		c.JSON(400, gin.H{"error": "empty list"})
 		return
 	}
 
@@ -67,7 +77,60 @@ func findEEA(a int64, b int64) [][]int64 {
 	return result
 }
 
-func findGEA(list []int) [][]int {
+func findEEABig(A, B *big.Int) [][]string {
+	a := new(big.Int).Set(A)
+	b := new(big.Int).Set(B)
+	zero := big.NewInt(0)
+
+	var max, min big.Int
+	if a.Cmp(b) > 0 {
+		max, min = *a, *b
+	} else {
+		max, min = *b, *a
+	}
+
+	result := [][]string{
+		{max.String(), "1", "0"},
+		{min.String(), "0", "1", new(big.Int).Div(&max, &min).String()},
+	}
+
+	i := len(result) - 1
+	for {
+		res_i_0, _ := new(big.Int).SetString(result[i][0], 10)
+		res_i_3, _ := new(big.Int).SetString(result[i][3], 10)
+		res_i_s1_0, _ := new(big.Int).SetString(result[i-1][0], 10)
+		mulA := new(big.Int).Mul(res_i_0, res_i_3)
+		a := new(big.Int).Sub(res_i_s1_0, mulA)
+		if a.Cmp(zero) == 0 {
+			break
+		}
+
+		res_i_s1_1, _ := new(big.Int).SetString(result[i-1][1], 10)
+		res_i_1, _ := new(big.Int).SetString(result[i][1], 10)
+		mulX := new(big.Int).Mul(res_i_1, res_i_3)
+		x := new(big.Int).Sub(res_i_s1_1, mulX)
+
+		res_i_s1_2, _ := new(big.Int).SetString(result[i-1][2], 10)
+		res_i_2, _ := new(big.Int).SetString(result[i][2], 10)
+		mulY := new(big.Int).Mul(res_i_2, res_i_3)
+		y := new(big.Int).Sub(res_i_s1_2, mulY)
+
+		q := new(big.Int).Div(res_i_0, a)
+
+		line := []string{a.String(), x.String(), y.String(), q.String()}
+		i++
+
+		result = append(result, line)
+	}
+
+	return result
+}
+
+func findGEA(list []int) int {
+	if len(list) == 0 {
+		return -1
+	}
+
 	sort.Ints(list)
 	result := [][]int{
 		list,
@@ -93,7 +156,7 @@ func findGEA(list []int) [][]int {
 		sort.Sort(sort.Reverse(sort.IntSlice(numbers[:])))
 		result = append(result, numbers)
 	}
-	return result
+	return result[len(result)-1][0]
 }
 
 func findMin(numbers []int) int {

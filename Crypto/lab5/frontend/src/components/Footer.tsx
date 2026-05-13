@@ -5,7 +5,7 @@ export default function Footer() {
 
     <nav className="bg-surface2">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4">
-        <span className="text-muted"> &copy; { new Date().getFullYear() } Voteapp </span>
+        <span className="text-muted"> &copy; { new Date().getFullYear() } CryptoLab - kn1ghts. </span>
     </div>
     </nav>
     </>

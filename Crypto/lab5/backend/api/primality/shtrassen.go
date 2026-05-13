@@ -34,7 +34,7 @@ func strassenWorker(n big.Int, limit int64) bool {
 		exp := new(big.Int).Sub(&n, one)
 		exp.Div(exp, two)
 		res := new(big.Int).Exp(&a, exp, &n)
-		jacobi := api.FindBigJacobiSymbol(&a, &n)
+		jacobi, _ := api.FindJacobiSymbolBig(&a, &n)
 		var expected big.Int
 		expected.Mod(big.NewInt(jacobi), &n)
 

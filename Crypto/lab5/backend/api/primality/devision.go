@@ -1,13 +1,15 @@
 package primality
 
 import (
+	"context"
 	"math/big"
 	"sync"
 )
 
-func runDevisionWorkers(n big.Int) bool {
-
+func runDevisionWorkers(ctx context.Context, n big.Int) bool {
 	var mod big.Int
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 
 	if mod.Mod(&n, big.NewInt(2)).Cmp(big.NewInt(0)) == 0 {
 		return false
@@ -15,7 +17,6 @@ func runDevisionWorkers(n big.Int) bool {
 
 	THREADS := 5
 	result := make(chan bool, THREADS)
-	done := make(chan struct{})
 
 	var wg sync.WaitGroup
 	wg.Add(THREADS)
@@ -26,10 +27,10 @@ func runDevisionWorkers(n big.Int) bool {
 
 	var i int64
 	for i = 3; i < 12; i += 2 {
-		go devisionWorker(&wg, n, *big.NewInt(i), end, *step, result, done)
+		go devisionWorker(&wg, ctx, cancel, n, *big.NewInt(i), end, *step, result)
 	}
 
-	for i = 0; i < 5; i++ {
+	for i = 0; i < int64(THREADS); i++ {
 		if <-result == false {
 			return false
 		}
@@ -39,16 +40,21 @@ func runDevisionWorkers(n big.Int) bool {
 
 func devisionWorker(
 	wg *sync.WaitGroup,
+	ctx context.Context,
+	cancel context.CancelFunc,
 	n, start, end, step big.Int,
-	result chan bool, done chan struct{},
+	result chan bool,
 ) {
 	defer wg.Done()
 
 	var mod big.Int
+	zero := big.NewInt(0)
+
 	i := start
 	for {
 		select {
-		case <-done:
+		case <-ctx.Done():
+			result <- false
 			return
 		default:
 		}
@@ -57,9 +63,9 @@ func devisionWorker(
 			break
 		}
 
-		if mod.Mod(&n, &i).Cmp(big.NewInt(0)) == 0 {
+		if mod.Mod(&n, &i).Cmp(zero) == 0 {
 			result <- false
-			close(done)
+			cancel()
 			return
 		}
 		i.Add(&i, &step)

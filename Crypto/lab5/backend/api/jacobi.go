@@ -1,14 +1,15 @@
 package api
 
 import (
+	"fmt"
 	"math/big"
 
 	"github.com/gin-gonic/gin"
 )
 
 type jacobiData struct {
-	A int64
-	N int64
+	A string
+	N string
 }
 
 func HandleJacobiSymbol(c *gin.Context) {
@@ -16,7 +17,14 @@ func HandleJacobiSymbol(c *gin.Context) {
 	if err := c.BindJSON(&data); err != nil {
 		return
 	}
-	result := findJacobiSymbol(data.A, data.N)
+
+	a, _ := new(big.Int).SetString(data.A, 10)
+	n, _ := new(big.Int).SetString(data.N, 10)
+	result, err := FindJacobiSymbolBig(a, n)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(200, result)
 }
 
@@ -57,7 +65,7 @@ func findJacobiSymbol(a int64, n int64) int64 {
 	}
 }
 
-func FindBigJacobiSymbol(a *big.Int, n *big.Int) int64 {
+func FindJacobiSymbolBig(a *big.Int, n *big.Int) (int64, error) {
 	A := new(big.Int).Set(a)
 	N := new(big.Int).Set(n)
 	var mod big.Int
@@ -71,9 +79,18 @@ func FindBigJacobiSymbol(a *big.Int, n *big.Int) int64 {
 	five := big.NewInt(5)
 	eight := big.NewInt(8)
 
+	if N.Cmp(zero) <= 0 {
+		return 0, fmt.Errorf("n должно быть положительным")
+	}
+
+	// n нечётное
+	if new(big.Int).Mod(N, two).Cmp(zero) == 0 {
+		return 0, fmt.Errorf("n должно быть нечётным")
+	}
+
 	for {
 		if A.Cmp(zero) == 0 {
-			return 0
+			return 0, nil
 		}
 		t := 0
 		for {
@@ -92,7 +109,7 @@ func FindBigJacobiSymbol(a *big.Int, n *big.Int) int64 {
 		}
 
 		if A.Cmp(one) == 0 {
-			return result
+			return result, nil
 		}
 
 		if new(big.Int).Mod(A, four).Cmp(three) == 0 && new(big.Int).Mod(N, four).Cmp(three) == 0 {

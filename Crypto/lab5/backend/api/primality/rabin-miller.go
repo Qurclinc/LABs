@@ -5,22 +5,6 @@ import (
 	"math/big"
 )
 
-func decompose(n *big.Int) (big.Int, big.Int) {
-	N := new(big.Int).Set(n)
-	zero := big.NewInt(0)
-	one := big.NewInt(1)
-	two := big.NewInt(2)
-	var s big.Int
-	for {
-		if new(big.Int).Mod(N, two).Cmp(zero) != 0 {
-			break
-		}
-		N.Div(N, two)
-		s.Add(&s, one)
-	}
-	return s, *N
-}
-
 func rabinMillerWorker(n big.Int, limit int64) bool {
 	var pickedValues = make(map[string]struct{})
 	var k int64
@@ -29,7 +13,7 @@ func rabinMillerWorker(n big.Int, limit int64) bool {
 	one := big.NewInt(1)
 	two := big.NewInt(2)
 	subN := new(big.Int).Sub(&n, one)
-	s, t := decompose(subN)
+	s, t := api.DecomposeOfTwo(subN)
 outer:
 	for k = 0; k < limit; k++ {
 		for {
