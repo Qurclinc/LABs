@@ -7,7 +7,7 @@ import requests
 def encode_text(text: str, lang: Literal["rus", "eng"]) -> int:
     if lang not in ["rus", "eng"]:
         raise KeyError
-    base = len(ALPHABET[lang])
+    base = len(ALPHABET[lang]) + 1
     result = 0
     for char in text:
         result = result * base + (ALPHABET[lang].index(char) + 1) # + 1 чтобы не терялось
@@ -16,7 +16,7 @@ def encode_text(text: str, lang: Literal["rus", "eng"]) -> int:
 def decode_text(text: int, lang: Literal["rus", "eng"]):
     if lang not in ["rus", "eng"]:
         raise KeyError
-    base = len(ALPHABET[lang])
+    base = len(ALPHABET[lang]) + 1
     result = []
     while text > 0:
         idx = text % base
