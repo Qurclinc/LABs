@@ -1,0 +1,21 @@
+PixCrypt Hypothesis Test Report
+Generated: 2026-05-14 23:28:47.743200
+======================================================================
+
+[ERROR] Encrypt-Decrypt Cycle
+  ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+[ERROR] Different File Sizes
+  ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+[ERROR] Idempotent Encryption
+  ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+[ERROR] Corrupted Data Handling
+  InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is at best slowing 
+
+[PASSED] Encrypt Without Key
+
+[ERROR] MAC Check on Modification
+  ZeroDivisionError: integer modulo by zero
+

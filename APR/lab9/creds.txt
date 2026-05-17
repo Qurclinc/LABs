@@ -1,0 +1,10 @@
+WebUser:
+Adam:iloveyou2
+
+MachineUser:
+--
+
+DB:
+define( 'DB_NAME',"wordpress" );
+define( 'DB_USER', "wpuser" );
+define( 'DB_PASSWORD', "deepwordpress" );

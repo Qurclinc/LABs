@@ -1,0 +1,7 @@
+numpy==2.4.1
+pillow==12.1.0
+pycryptodome==3.23.0
+PyQt6==6.11.0
+PyQt6-Qt6==6.11.0
+PyQt6_sip==13.11.1
+screeninfo==0.8.1

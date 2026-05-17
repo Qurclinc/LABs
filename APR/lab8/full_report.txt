@@ -1,0 +1,293 @@
+======================================================================
+🔍 HYPOTHESIS PROPERTY-BASED TESTING FOR PIXCRYPT
+======================================================================
+Started: 2026-05-14 23:20:22
+
+
+🧪 Running: Encrypt-Decrypt Cycle
+--------------------------------------------------
+💥 ERROR: ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+  + Exception Group Traceback (most recent call last):
+  |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 179, in run_test_safely
+  |     test_func()
+  |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 198, in test_encrypt_decrypt_cycle
+  |     key_image=image_keys(),
+  |                ^^^
+  |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 2264, in wrapped_test
+  |     raise the_error_hypothesis_found
+  | ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 1175, in execute_once
+    |     raise FlakyFailure(
+    | hypothesis.errors.FlakyFailure: Hypothesis test_encrypt_decrypt_cycle(key_image=PosixPath('/tmp/tmp5gs8q_7d.png'), data=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00') produces unreliable results: Falsified on the first call but did not on a subsequent one (1 sub-exception)
+    | Falsifying example: test_encrypt_decrypt_cycle(
+    |     key_image=PosixPath('/tmp/tmp5gs8q_7d.png'),
+    |     data=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+    | )
+    | Failed to reproduce exception. Expected:
+    | Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 223, in test_encrypt_decrypt_cycle
+    |     assert success, f"Decryption failed: {msg}"
+    |            ^^^^^^^
+    | AssertionError: Decryption failed: MAC check failed — Data is corrupted
+    |
+    | Explanation:
+    |     These lines were always and only run by failing examples:
+    |         /mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/Crypto/Cipher/_mode_gcm.py:508
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 1211, in _execute_once_for_engine
+      |     result = self.execute_once(data)
+      |              ^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 1150, in execute_once
+      |     result = self.test_runner(data, run)
+      |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 824, in default_executor
+      |     return function(data)
+      |            ^^^^^^^^^^^^^^
+      |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 1107, in run
+      |     return test(*args, **kwargs)
+      |            ^^^^^^^^^^^^^^^^^^^^^
+      |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 198, in test_encrypt_decrypt_cycle
+      |     key_image=image_keys(),
+      |                ^^^^^^^^^^^^^
+      |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 1004, in test
+      |     return self.test(*args, **kwargs)
+      |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+      |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 223, in test_encrypt_decrypt_cycle
+      |     assert success, f"Decryption failed: {msg}"
+      |            ^^^^^^^
+      | AssertionError: Decryption failed: MAC check failed — Data is corrupted
+      +------------------------------------
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 218, in test_encrypt_decrypt_cycle
+    |     success, msg = crypter.encrypt(src, enc)
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/Services/crypter.py", line 123, in encrypt
+    |     if counter % step == 0 and inserted != length:
+    |        ~~~~~~~~^~~~~~
+    | ZeroDivisionError: integer modulo by zero
+    | Falsifying example: test_encrypt_decrypt_cycle(
+    |     key_image=PosixPath('/tmp/tmp5qrv5a7z.png'),
+    |     data=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+    | )
+    | Explanation:
+    |     These lines were always and only run by failing examples:
+    |         /mnt/Data/Games/LABs/APR/lab8/fuzzing.py:34
+    |         /mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/PIL/Image.py:3316
+    |         /usr/lib/python3.12/pathlib.py:1343
+    +------------------------------------
+
+🧪 Running: Different File Sizes
+--------------------------------------------------
+💥 ERROR: ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+  + Exception Group Traceback (most recent call last):
+  |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 179, in run_test_safely
+  |     test_func()
+  |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 237, in test_encrypt_different_sizes
+  |     key_image=image_keys(),
+  |                ^^^
+  |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 2264, in wrapped_test
+  |     raise the_error_hypothesis_found
+  | ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 251, in test_encrypt_different_sizes
+    |     success, msg = crypter.encrypt(src, enc)
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/Services/crypter.py", line 123, in encrypt
+    |     if counter % step == 0 and inserted != length:
+    |        ~~~~~~~~^~~~~~
+    | ZeroDivisionError: integer modulo by zero
+    | Falsifying example: test_encrypt_different_sizes(
+    |     key_image=PosixPath('/tmp/tmp2y4288sc.png'),  # or any other generated value
+    |     data=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+    | )
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 38, in image_keys
+    |     pixels = draw(
+    |              ^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/internal/conjecture/data.py", line 1187, in draw
+    |     strategy.validate()
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/strategies.py", line 515, in validate
+    |     self.do_validate()
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/lazy.py", line 146, in do_validate
+    |     w = self.wrapped_strategy
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/lazy.py", line 116, in wrapped_strategy
+    |     base = self.function(*self.__args, **self.__kwargs)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/core.py", line 404, in lists
+    |     return ListStrategy(elements, min_size=min_size, max_size=max_size)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/collections.py", line 184, in __init__
+    |     raise InvalidArgument(
+    | hypothesis.errors.InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is at best slowing down your tests for no benefit; at worst making them fail (maybe flakily) with a HealthCheck error.
+    | while generating 'key_image' from image_keys()
+    +------------------------------------
+
+🧪 Running: Idempotent Encryption
+--------------------------------------------------
+💥 ERROR: ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+  + Exception Group Traceback (most recent call last):
+  |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 179, in run_test_safely
+  |     test_func()
+  |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 262, in test_encrypt_idempotent
+  |     key_image=image_keys(),
+  |                ^^^
+  |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 2264, in wrapped_test
+  |     raise the_error_hypothesis_found
+  | ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 277, in test_encrypt_idempotent
+    |     crypter.encrypt(src, enc1)
+    |   File "/mnt/Data/Games/LABs/APR/lab8/Services/crypter.py", line 123, in encrypt
+    |     if counter % step == 0 and inserted != length:
+    |        ~~~~~~~~^~~~~~
+    | ZeroDivisionError: integer modulo by zero
+    | Falsifying example: test_encrypt_idempotent(
+    |     key_image=PosixPath('/tmp/tmpx70jq3sf.png'),  # or any other generated value
+    |     data=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+    | )
+    +---------------- 2 ----------------
+    | Traceback (most recent call last):
+    |   File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 38, in image_keys
+    |     pixels = draw(
+    |              ^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/internal/conjecture/data.py", line 1187, in draw
+    |     strategy.validate()
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/strategies.py", line 515, in validate
+    |     self.do_validate()
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/lazy.py", line 146, in do_validate
+    |     w = self.wrapped_strategy
+    |         ^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/lazy.py", line 116, in wrapped_strategy
+    |     base = self.function(*self.__args, **self.__kwargs)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/core.py", line 404, in lists
+    |     return ListStrategy(elements, min_size=min_size, max_size=max_size)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/collections.py", line 184, in __init__
+    |     raise InvalidArgument(
+    | hypothesis.errors.InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is at best slowing down your tests for no benefit; at worst making them fail (maybe flakily) with a HealthCheck error.
+    | while generating 'key_image' from image_keys()
+    +------------------------------------
+
+🧪 Running: Corrupted Data Handling
+--------------------------------------------------
+💥 ERROR: InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is at best slowing
+Traceback (most recent call last):
+  File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 179, in run_test_safely
+    test_func()
+  File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 288, in test_decrypt_corrupted_data
+    key_image=image_keys(),
+               ^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 2264, in wrapped_test
+    raise the_error_hypothesis_found
+  File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 38, in image_keys
+    pixels = draw(
+             ^^^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/internal/conjecture/data.py", line 1187, in draw
+    strategy.validate()
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/strategies.py", line 515, in validate
+    self.do_validate()
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/lazy.py", line 146, in do_validate
+    w = self.wrapped_strategy
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/lazy.py", line 116, in wrapped_strategy
+    base = self.function(*self.__args, **self.__kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/core.py", line 404, in lists
+    return ListStrategy(elements, min_size=min_size, max_size=max_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/strategies/_internal/collections.py", line 184, in __init__
+    raise InvalidArgument(
+hypothesis.errors.InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is at best slowing down your tests for no benefit; at worst making them fail (maybe flakily) with a HealthCheck error.
+while generating 'key_image' from image_keys()
+
+🧪 Running: Encrypt Without Key
+--------------------------------------------------
+✅ PASSED
+
+🧪 Running: MAC Check on Modification
+--------------------------------------------------
+💥 ERROR: ZeroDivisionError: integer modulo by zero
+Traceback (most recent call last):
+  File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 179, in run_test_safely
+    test_func()
+  File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 341, in test_mac_check_on_modification
+    key_image=image_keys(),
+               ^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/.venv/lib/python3.12/site-packages/hypothesis/core.py", line 2264, in wrapped_test
+    raise the_error_hypothesis_found
+  File "/mnt/Data/Games/LABs/APR/lab8/fuzzing.py", line 356, in test_mac_check_on_modification
+    success, msg = crypter.encrypt(src, enc)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/Data/Games/LABs/APR/lab8/Services/crypter.py", line 123, in encrypt
+    if counter % step == 0 and inserted != length:
+       ~~~~~~~~^~~~~~
+ZeroDivisionError: integer modulo by zero
+Falsifying example: test_mac_check_on_modification(
+    key_image=PosixPath('/tmp/tmppiv3m8bl.png'),
+    data=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+)
+Explanation:
+    These lines were always and only run by failing examples:
+        /usr/lib/python3.12/pathlib.py:1343
+
+======================================================================
+📊 TEST REPORT SUMMARY
+======================================================================
+Total time: 505.3 seconds
+Tests run: 6
+✅ Passed: 1
+❌ Failed: 0
+💥 Errors: 5
+
+----------------------------------------------------------------------
+DETAILED RESULTS:
+----------------------------------------------------------------------
+
+1. 💥 Encrypt-Decrypt Cycle
+   ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+2. 💥 Different File Sizes
+   ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+3. 💥 Idempotent Encryption
+   ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+4. 💥 Corrupted Data Handling
+   InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is
+
+5. ✅ Encrypt Without Key
+
+6. 💥 MAC Check on Modification
+   ZeroDivisionError: integer modulo by zero
+
+======================================================================
+🔍 BUGS FOUND:
+======================================================================
+
+• Encrypt-Decrypt Cycle
+  ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+• Different File Sizes
+  ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+• Idempotent Encryption
+  ExceptionGroup: Hypothesis found 2 distinct failures. (2 sub-exceptions)
+
+• Corrupted Data Handling
+  InvalidArgument: ListStrategy(integers(min_value=0, max_value=255), min_size=8_200, max_size=8_200) can never generate an example, because min_size is larger than Hypothesis supports.  Including it is at best slowing
+
+• MAC Check on Modification
+  ZeroDivisionError: integer modulo by zero
+
+======================================================================
+
+📄 Report saved to: test_report_20260514_232847.txt

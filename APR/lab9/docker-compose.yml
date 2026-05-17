@@ -1,0 +1,50 @@
+version: '3.3'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: wordpress-nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./data/html:/var/www/html
+      - ./logs/nginx:/var/log/nginx
+    ports:
+      - "8081:8081"
+    networks:
+      - wordpress-network
+
+  wordpress:
+    hostname: cookinghub
+    depends_on:
+      - db
+    build: .
+    container_name: wordpress-web
+    command: bash -c "service ssh start && docker-entrypoint.sh apache2-foreground"
+    volumes:
+      - wordpress-web:/var/www/html:rw
+    ports:
+      - "8888:80"
+      - "2222:22"
+    env_file:
+      - .env
+    networks:
+      - wordpress-network
+    
+  db:
+    image: mysql:5.7
+    container_name: wordpress-db
+    volumes:
+      - wordpress-mysql:/var/lib/mysql:rw
+    ports:
+      - "3306:3306" # Specially
+    env_file:
+      - .env
+    networks:
+      - wordpress-network
+
+volumes:
+  wordpress-mysql:
+  wordpress-web:
+
+networks:
+  wordpress-network:
