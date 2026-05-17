@@ -82,16 +82,35 @@ func findEEABig(A, B *big.Int) [][]string {
 	b := new(big.Int).Set(B)
 	zero := big.NewInt(0)
 
-	var max, min big.Int
-	if a.Cmp(b) > 0 {
-		max, min = *a, *b
-	} else {
-		max, min = *b, *a
+	if a.Cmp(zero) == 0 || b.Cmp(zero) == 0 {
+		var max *big.Int
+		if a.Cmp(b) > 0 {
+			max = a
+		} else {
+			max = b
+		}
+
+		// НОД = ненулевое число
+		// Если оба 0, пусть будет 0
+		gcd := new(big.Int).Set(max)
+
+		x := big.NewInt(1) // Коэффициент при ненулевом
+		y := big.NewInt(0) // Коэффициент при нуле
+
+		// Если первое число — ноль, меняем коэффициенты местами
+		if a.Cmp(zero) == 0 {
+			x, y = y, x
+		}
+
+		return [][]string{
+			{a.String(), x.String(), y.String()},
+			{gcd.String(), x.String(), y.String()},
+		}
 	}
 
 	result := [][]string{
-		{max.String(), "1", "0"},
-		{min.String(), "0", "1", new(big.Int).Div(&max, &min).String()},
+		{a.String(), "1", "0"},
+		{b.String(), "0", "1", new(big.Int).Div(a, b).String()},
 	}
 
 	i := len(result) - 1

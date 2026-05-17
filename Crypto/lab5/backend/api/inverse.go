@@ -71,7 +71,14 @@ func findMultiplicativeInverseBig(A, M *big.Int) (string, error) {
 		return "-1", fmt.Errorf("НОД(%s, %s) != 1", a.String(), m.String())
 	}
 
-	inv, _ := new(big.Int).SetString(res[len(res)-1][2], 10)
+	var invIndex int
+	if a.Cmp(m) < 0 {
+		invIndex = 1
+	} else {
+		invIndex = 2
+	}
+
+	inv, _ := new(big.Int).SetString(res[len(res)-1][invIndex], 10)
 	result := inv.Mod(inv, m)
 	return result.String(), nil
 }

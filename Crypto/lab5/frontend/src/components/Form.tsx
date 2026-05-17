@@ -24,6 +24,9 @@ function parseValue(field: FieldConfig, value: string) {
       if (!parsed.length) throw new Error("Введите список чисел");
       return parsed;
 
+    case "bool":
+      return Boolean(value);
+
     default:
       return String(value);
   }
@@ -37,7 +40,7 @@ export function Form({ config }: { config: EndpointConfig }) {
 
   const controllerRef = useRef<AbortController | null>(null);
 
-  const handleChange = (k: string, v: string) => {
+  const handleChange = (k: string, v: any) => {
     setValues((p) => ({ ...p, [k]: v }));
   };
 
@@ -89,16 +92,27 @@ export function Form({ config }: { config: EndpointConfig }) {
       </h2>
 
       <div className="flex flex-col gap-3">
-        {config.fields.map((f) => (
-          <input
-            key={f.name}
-            value={values[f.name] || ""}
-            onChange={(e) => handleChange(f.name, e.target.value)}
-            placeholder={f.placeholder || f.name}
-            disabled={loading}
-            className="bg-surface2 border border-border rounded-lg p-2 text-text"
-          />
-        ))}
+        {config.fields.map((f) =>
+          f.type === "bool" ? (
+            <label key={f.name} className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={Boolean(values[f.name])}
+                onChange={(e) => handleChange(f.name, e.target.checked)}
+              />
+              {f.name}
+            </label>
+          ) : (
+            <input
+              key={f.name}
+              value={values[f.name] || ""}
+              onChange={(e) => handleChange(f.name, e.target.value)}
+              placeholder={f.placeholder || f.name}
+              disabled={loading}
+              className="bg-surface2 border border-border rounded-lg p-2 text-text"
+            />
+          )
+        )}
 
         <div className="flex gap-2">
           <button
@@ -126,11 +140,25 @@ export function Form({ config }: { config: EndpointConfig }) {
       )}
 
       {result !== null && (
-        <pre className="mt-4 bg-surface2 p-3 rounded-lg text-green">
-          {config.key === "eea"
-            ? <EEATable data={result} />
-            : JSON.stringify(result, null, 2)}
-        </pre>
+        <div className="mt-4 bg-surface2 p-3 rounded-lg text-green">
+          {config.key === "primitiveroot" && Array.isArray(result) ? (
+            <div className="flex flex-wrap gap-2">
+              {result.map((x: string, i: number) => (
+                <span key={i} className="px-2 py-1 bg-bg rounded">
+                  {x}
+                </span>
+              ))}
+            </div>
+          ) : config.key === "eea" ? (
+            <EEATable data={result} />
+          ) : config.key === "single" && Array.isArray(result) ? (
+            result.map((x: string, i: number) => (
+              <div key={i}>x ≡ {x} (mod {values["m"]})</div>
+            ))
+          ) : (
+            <pre>{JSON.stringify(result, null, 2)}</pre>
+          )}
+        </div>
       )}
     </div>
   );

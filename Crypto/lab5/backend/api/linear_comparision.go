@@ -102,7 +102,7 @@ func HandleSystemComparision(c *gin.Context) {
 // 	return SystemCompAnswer{X: x, M: M}, nil
 // }
 
-func solveSingleComparisionBig(A, B, M *big.Int) string {
+func solveSingleComparisionBig(A, B, M *big.Int) []string {
 	a := new(big.Int).Set(A)
 	b := new(big.Int).Set(B)
 	m := new(big.Int).Set(M)
@@ -110,19 +110,34 @@ func solveSingleComparisionBig(A, B, M *big.Int) string {
 	a.Mod(a, m)
 	b.Mod(b, m)
 	zero := big.NewInt(0)
+	one := big.NewInt(1)
 
 	line := findEEABig(a, m)
 	res := line[len(line)-1]
 	d, _ := new(big.Int).SetString(res[0], 10)
 	if new(big.Int).Mod(b, d).Cmp(zero) != 0 {
-		return "Нет решений"
+		return []string{"Нет решений"}
 	}
 
-	inv, _ := new(big.Int).SetString(res[2], 10)
-	x := new(big.Int).Mul(inv, b)
-	x.Mod(x, m)
+	aDivD := new(big.Int).Div(a, d)
+	bDivD := new(big.Int).Div(b, d)
+	mDivD := new(big.Int).Div(m, d)
+	var solutions []string
+	step := new(big.Int).Div(m, d)
 
-	return x.String()
+	invValue, _ := findMultiplicativeInverseBig(aDivD, mDivD)
+	inv, _ := new(big.Int).SetString(invValue, 10)
+	x0 := new(big.Int).Mul(inv, bDivD)
+	x0.Mod(x0, mDivD)
+
+	for k := big.NewInt(0); k.Cmp(d) < 0; k.Add(k, one) {
+		xk := new(big.Int).Mul(k, step)
+		xk.Add(xk, x0)
+		xk.Mod(xk, m)
+		solutions = append(solutions, xk.String())
+	}
+
+	return solutions
 }
 
 func solveSystemComparisionsBig(coeffs [][]string) (SystemCompAnswer, error) {
@@ -144,7 +159,7 @@ func solveSystemComparisionsBig(coeffs [][]string) (SystemCompAnswer, error) {
 	b, _ := new(big.Int).SetString(coeffs[0][1], 10)
 	m, _ := new(big.Int).SetString(coeffs[0][2], 10)
 
-	x, _ := new(big.Int).SetString(solveSingleComparisionBig(a, b, m), 10)
+	x, _ := new(big.Int).SetString(solveSingleComparisionBig(a, b, m)[0], 10)
 	M := m
 	// Отправная точка
 
@@ -158,7 +173,7 @@ func solveSystemComparisionsBig(coeffs [][]string) (SystemCompAnswer, error) {
 		mulB := new(big.Int).Mul(a, x)
 		B := new(big.Int).Sub(b, mulB)
 
-		t, _ := new(big.Int).SetString(solveSingleComparisionBig(A, B, m), 10)
+		t, _ := new(big.Int).SetString(solveSingleComparisionBig(A, B, m)[0], 10)
 
 		mulMt := new(big.Int).Mul(M, t)
 		x.Add(x, mulMt)

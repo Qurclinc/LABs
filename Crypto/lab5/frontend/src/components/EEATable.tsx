@@ -1,4 +1,16 @@
 export function EEATable({ data }: { data: number[][] }) {
+  // Находим НОД (последнее ненулевое a)
+  const gcd = data[data.length - 1]?.[0] ?? 0;
+  
+  // Берём коэффициенты из последней строки (x и y)
+  const lastRow = data[data.length - 1];
+  const x = lastRow?.[1] ?? 0;
+  const y = lastRow?.[2] ?? 0;
+  
+  // a и b из первой строки (исходные числа)
+  const a0 = data[0]?.[0] ?? 0;
+  const b0 = data[1]?.[0] ?? 0;
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm border border-border rounded-xl overflow-hidden">
@@ -14,7 +26,7 @@ export function EEATable({ data }: { data: number[][] }) {
 
         <tbody>
           {data.map((row, i) => {
-            const [a, x, y, q] = row;
+            const [a, xVal, yVal, q] = row;
 
             return (
               <tr
@@ -28,8 +40,8 @@ export function EEATable({ data }: { data: number[][] }) {
 
                 <td className="p-2 text-blue font-semibold">{a}</td>
 
-                <td className="p-2">{x ?? "-"}</td>
-                <td className="p-2">{y ?? "-"}</td>
+                <td className="p-2">{xVal ?? "-"}</td>
+                <td className="p-2">{yVal ?? "-"}</td>
 
                 <td className="p-2 text-yellow">
                   {q !== undefined ? q : "-"}
@@ -39,6 +51,11 @@ export function EEATable({ data }: { data: number[][] }) {
           })}
         </tbody>
       </table>
+
+      {/* Линейное разложение */}
+      <div className="mt-4 p-3 bg-surface2 rounded-lg text-center text-green font-mono text-lg">
+        {a0} · ({x}) + {b0} · ({y}) = {gcd}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-export type FieldType = "int" | "string" | "list";
+export type FieldType = "int" | "string" | "list" | "bool";
 
 export interface FieldConfig {
   name: string;
@@ -15,7 +15,7 @@ export interface EndpointConfig {
   subtabs?: EndpointConfig[];
 }
 
-export const cancellable = ["binary", "devision", "wilson", "lucas"];
+export const cancellable = ["binary", "devision", "wilson", "lucas", "primitiveroot"];
 
 export const apiConfig: EndpointConfig[] = [
   {
@@ -175,6 +175,15 @@ export const apiConfig: EndpointConfig[] = [
           { name: "k", type: "int" },
         ],
       },
+    ],
+  },
+  {
+    key: "primitiveroot",
+    label: "Первообразные корни",
+    endpoint: "/api/primitiveroot",
+    fields: [
+      { name: "n", type: "string" },
+      { name: "onlysingle", type: "bool", placeholder: "Только один" },
     ],
   },
 ];

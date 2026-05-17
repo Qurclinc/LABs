@@ -31,5 +31,7 @@ func main() {
 	router.POST("/api/strassen", primality.HandleShtrassen)
 	router.POST("/api/rabin", primality.HandleRabinMiller)
 
+	router.POST("/api/primitiveroot", api.HandlePrimitiveRoot)
+
 	router.Run("0.0.0.0:8000")
 }

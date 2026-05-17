@@ -32,6 +32,7 @@ func HandleSquareComparision(c *gin.Context) {
 func solveSquareComparision(a, b, m *big.Int) (string, error) {
 	one := big.NewInt(1)
 	two := big.NewInt(2)
+	a.Mod(a, m)
 
 	// Нормализуем если коэффициент при х не 1
 	if a.Cmp(one) != 0 {
