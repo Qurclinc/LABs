@@ -1,10 +1,10 @@
 from typing import Dict
 from math import gcd
 
-from Crypto.Util.number import getPrime, inverse
+from Crypto.Util.number import getPrime
 
 from .cryptosystem import Cryptosystem, ExchangeError
-from utils import verify_primality
+from utils import verify_primality, inverse, bin_pow
 
 class RSAClient(Cryptosystem):
     def __init__(self, bits: int = 64):
@@ -37,9 +37,9 @@ class RSAClient(Cryptosystem):
             raise ExchangeError
         E = self.other_public_key["E"]
         N = self.other_public_key["N"]
-        return pow(message, E, N)
+        return bin_pow(message, E, N)
     
     def read_message(self, ciphertext: int):
         if not(self.other_public_key):
             raise ExchangeError
-        return pow(ciphertext, self.d, self.N)
+        return bin_pow(ciphertext, self.d, self.N)

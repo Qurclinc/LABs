@@ -24,6 +24,16 @@ def decode_text(text: int, lang: Literal["rus", "eng"]):
         text //= base
     return "".join(reversed(result))
 
+def bin_pow(a: int, n: int, m: int):
+    payload = {"a": str(a), "n": str(n), "m": str(m)}
+    response = requests.post(f"{URL}/binpow", json=payload)
+    return int(response.json())
+
+def inverse(a: int, m: int):
+    payload = {"a": str(a), "m": str(m)}
+    response = requests.post(f"{URL}/inverse", json=payload)
+    return int(response.json())
+
 def verify_primality(n: int):
     payload = {"n": str(n), "k": 10} 
     results = []
