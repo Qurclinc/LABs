@@ -1,3 +1,4 @@
+*.elf
 *.legacy
 */__pycache__/
 *.pyc

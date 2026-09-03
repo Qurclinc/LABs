@@ -5,7 +5,7 @@ CXXFLAGS:=-fopenmp -fpermissive
 # Directories
 SRC_DIR:=src
 BUILD_DIR:=build
-TARGET:=main
+TARGET:=main.elf
 
 # Files
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)

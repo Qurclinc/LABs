@@ -17,8 +17,8 @@ std::vector<std::vector<int>> generateMatrix(int n, int m) {
     }
 
 
-    // Delete this
-    // std::vector<std::vector<int>> vec{{21,43,20},{38,19,49},{10,13,33}};
+    // For test only
+    // std::vector<std::vector<int>> vec{{10,34,35,14,21},{34,35,21,47,50},{20,37,36,22,24},{37,22,35,19,23},{29,49,36,25,12}};
     // return vec;
 
     std::vector<std::vector<int>> matrix(m, std::vector<int>(n, 0));
@@ -48,14 +48,24 @@ bool isLocalMinimum(const std::vector<std::vector<int>> &matrix, int i, int j) {
     return true;
 }
 
-std::vector<int> findLocalMinimums(const std::vector<std::vector<int>> &matrix) {
-    auto minimums = std::vector<int>(0);
-    for(int i = 0; i < matrix.size(); i++) {
-        for(int j = 0; j < matrix[i].size(); j++) {
+std::vector<int> findLocalMinimums(
+    const std::vector<std::vector<int>> &matrix,
+    int startX, int startY,
+    int stopX, int stopY
+) {
+    if (startX == 0 && startY == 0 && stopX == 0 && stopY == 0) {
+        stopX = matrix[0].size();
+        stopY = matrix.size();
+    }
+    // printf("%d\t%d\t%d\t%d", startX, startY, stopX, stopY);
+    auto result = std::vector<int>();
+    for(int i = startY; i < stopY; i++) {
+        for(int j = startX; j < stopX; j++) {
             if (isLocalMinimum(matrix, i, j)) {
-                minimums.push_back(matrix[i][j]);
+                result.push_back(matrix[i][j]);
             }
         }
     }
-    return minimums;
+
+    return result;
 }
