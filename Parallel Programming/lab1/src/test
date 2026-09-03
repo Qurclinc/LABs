@@ -1,0 +1,13 @@
+#include <iostream>
+#include <omp.h>
+
+int main() {
+    #pragma omp parallel sections
+    {
+        #pragma omp section
+        { std::cout << "First section\n"; }
+        #pragma omp section
+        { std::cout << "Second section\n"; }
+    }
+    return 0;
+}
