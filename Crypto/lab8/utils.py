@@ -7,7 +7,7 @@ OPERATIONS = {
     "Addition": operator.add,
     "Multiplication": operator.mul
 }
-ALLOWED_PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+ALLOWED_PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] # После 29 у меня нет таблиц
 
 def number_to_letter(num: int) -> str:
     """Осуществляет перевод числа в буквенное представление. Латинский алфавит, формат как в 
