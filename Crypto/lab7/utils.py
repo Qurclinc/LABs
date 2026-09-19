@@ -1,5 +1,5 @@
 import socket
-MAX_TIMEDELTA = 1 # Максимальная абсолютная разница между временными меткамми
+MAX_TIMEDELTA = 0.5 # Максимальная абсолютная разница между временными меткамми
 TIMEOUT = 3.0 # Максимальное время ожидания отклика клиента
 
 FIRST_PORT = 55_000
@@ -31,6 +31,7 @@ def check_timestamp(time1: float, time2: float) -> bool:
     Returns:
         bool: Результат сравнения
     """
+    print(f"DELTA {time2 - time1}")
     result = abs(time2 - time1) < MAX_TIMEDELTA
     if not(result):
         raise DeltatimeException()
