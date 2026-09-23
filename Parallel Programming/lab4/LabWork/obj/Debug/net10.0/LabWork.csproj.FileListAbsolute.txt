@@ -1,0 +1,15 @@
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/bin/Debug/net10.0/LabWork
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/bin/Debug/net10.0/LabWork.deps.json
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/bin/Debug/net10.0/LabWork.runtimeconfig.json
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/bin/Debug/net10.0/LabWork.dll
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/bin/Debug/net10.0/LabWork.pdb
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.GeneratedMSBuildEditorConfig.editorconfig
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.AssemblyInfoInputs.cache
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.AssemblyInfo.cs
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.csproj.CoreCompileInputs.cache
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.sourcelink.json
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.dll
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/refint/LabWork.dll
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.pdb
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/LabWork.genruntimeconfig.cache
+/home/samuel/Work/LABs/Parallel Programming/lab4/LabWork/obj/Debug/net10.0/ref/LabWork.dll

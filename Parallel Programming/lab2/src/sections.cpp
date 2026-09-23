@@ -1,6 +1,6 @@
 #include "sections.hpp"
 
-void twoSections(const std::vector<std::vector<int>> &matrix) {
+void twoSections(const std::vector<std::vector<int>> &matrix, double T1) {
     std::vector<int> r1, r2 = std::vector<int>();
     int n = matrix.size();
     int m = matrix[0].size();
@@ -18,15 +18,18 @@ void twoSections(const std::vector<std::vector<int>> &matrix) {
             r2 = findLocalMinimums(matrix, n / 2, 0, n, m);
         }
     }
-    auto result = mergeVectors(std::vector<std::vector<int>>{r1, r2}, true);
 
     double end = omp_get_wtime();
 
+    auto result = mergeVectors(std::vector<std::vector<int>>{r1, r2}, true);
+
     printf("Two Sections: %.6f sec\n", end - start);
+    countParams(T1, (end - start), 2);
+
     // printVector(result);
 }
 
-void threeSections(const std::vector<std::vector<int>> &matrix) {
+void threeSections(const std::vector<std::vector<int>> &matrix, double T1) {
     std::vector<int> r1, r2, r3 = std::vector<int>();
     int n = matrix.size();
     int m = matrix[0].size();
@@ -52,11 +55,13 @@ void threeSections(const std::vector<std::vector<int>> &matrix) {
     double end = omp_get_wtime();
 
     auto result = mergeVectors(std::vector<std::vector<int>>{r1, r2, r3}, true);
+
     printf("Three Sections: %.6f sec\n", end - start);
+    countParams(T1, (end - start), 3);
     // printVector(result);
 }
 
-void fourSections(const std::vector<std::vector<int>> &matrix) {
+void fourSections(const std::vector<std::vector<int>> &matrix, double T1) {
     std::vector<int> r1, r2, r3, r4 = std::vector<int>();
     int n = matrix.size();
     int m = matrix[0].size();
@@ -86,6 +91,9 @@ void fourSections(const std::vector<std::vector<int>> &matrix) {
     double end = omp_get_wtime();
 
     auto result = mergeVectors(std::vector<std::vector<int>>{r1, r2, r3, r4}, true);
+
     printf("Four Sections: %.6f sec\n", end - start);
+    countParams(T1, (end - start), 4);
+
     // printVector(result);
 }
