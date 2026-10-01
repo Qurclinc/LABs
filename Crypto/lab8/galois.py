@@ -1,5 +1,5 @@
 import itertools
-from typing import Tuple, List
+from typing import List
 from utils import is_power_of_prime, form_table
 
 class Galois:
@@ -12,11 +12,17 @@ class Galois:
             self.irreducable = f.readlines()[self.m - 2].strip()
         
         # Все значения приведённые к многочленам для итераций и подписи колонок
-        self.all_coeffs = [coeffs for coeffs in itertools.product([x for x in range(self.p)], repeat=self.m)]    
-        self.reduction_rule = self._to_coefficients(self.irreducable) # Выражение старшей степени из неприводимого многочлена для дальнейшего удобства редукции
+        self.all_coeffs = [
+            list(coeffs)
+            for coeffs in itertools.product(
+                [x for x in range(self.p)], repeat=self.m
+            )
+        ]    
+        self.devisor = self._to_coefficients(self.irreducable)
+        self.primitive_element = self.find_primitive_element()
         
         print("Неприводимый многочлен: ", self.irreducable)
-        # print(self.reduction_rule)
+        print(self.devisor)
         
     def addition(self):
         """Строит таблицу сложений в поле GF(q)"""
@@ -67,30 +73,59 @@ class Galois:
             result_data=result
         )
         
-    def _reduce(self, coeffs: List[int]):
-        # НАПРИМЕР ДЛЯ GF(2^2)
-        # x(x+1) = x^2 + x
-        # x^2 = x + 1                          => x + 1 + x = 1
-        # в коэффициентах это (x^2 + x) будет выглядеть как (1, 1, 0)
-        # а правило редукции как (1, 1)
+    def find_primitive_element(self):
+        max_size = ((2 * (self.m - 1) + 1))
+        for c in self.all_coeffs[1:]:
+            gained_coeffs = [self.all_coeffs[1]]
+            for i in range(1, len(self.all_coeffs)):
+                coeffs = [0] * max_size
+                for i, x1 in enumerate(gained_coeffs[-1]):
+                    for j, x2 in enumerate(c):
+                        coeffs[i + j] = (coeffs[i + j] + x1 * x2) % self.p
+                self._reduce(coeffs)
+                if coeffs in gained_coeffs:
+                    break
+                gained_coeffs.append(coeffs)
+            if len(gained_coeffs) == len(self.all_coeffs) - 1:
+                # print(c)
+                return c
+        return None
         
-        # Пока в многочлене есть степень, которая превышает максимально допустимую m
-        i = 0
-        while i < len(coeffs) - self.m:
-            lead = coeffs[i] # Берётся самый первый (ибо порядок от старшего к младшему)
-            if lead != 0: # Если он ненулевой, то
-                for j in range(self.m):
-                    # Происходит рассчёт "вклада" в младшие степени от текущего коэффициента
-                    # то есть, каждый след. коэфициент перерасчитывается в соответствии с тем,
-                    # что остаётся после итерации применения правила редукции.
-                    coeffs[i + 1 + j] = (coeffs[i + 1 + j] + lead * self.reduction_rule[j]) % self.p
-                coeffs[i] = 0
-            i += 1
+    def _reduce(self, coeffs: List[int]):
+        """Выполняет деление многочлена на неприводимый многочлен и возвращает остаток
+        (остаток сохраняется в переданный coeffs)
+
+        Аргументы:
+            coeffs (List[int]): Коэффициенты в порядке от старшего к младшему
+        """
+        
+        # Очистка от лишних нулей слева
+        while coeffs and coeffs[0] == 0:
+            coeffs.pop(0)
             
+        # Пока степень делимого не меньше степени делителя
+        while len(coeffs) >= len(self.devisor):
+            
+            # Старший коэффициент делимого
+            lead = coeffs[0]
+            for i in range(len(self.devisor)):
+                coeffs[i] = (
+                    (coeffs[i] - lead * self.devisor[i]) % self.p
+                )
+                
+            # Удаление старшего члена
+            coeffs.pop(0)
+            
+            # Очистка от ведущих нулей до нужного раз
+            while coeffs and coeffs[0] == 0:
+                coeffs.pop(0)
+                
+        # Дополнение остатка нулями слева до размера элемента поля
+        while len(coeffs) < self.m:
+            coeffs.insert(0, 0)
         
     def _to_coefficients(self, polynom: str) -> List[int]:
-        """Переводит буквенное представление многочлена в список коэффициентов с выражением
-        старшего члена через остальные (с нормализацией, чтобы не вылезти за поле)
+        """Переводит буквенное представление многочлена в список коэффициентов.
 
         Аргументы:
             polynom (str): Текстовое представление полинома
@@ -99,9 +134,9 @@ class Galois:
             List[int]: Список коэффициентов
         """
         polynom = map(str.strip, polynom.split("+"))
-        coeffs = [0] * (self.m)
+        coeffs = [0] * (self.m + 1)
 
-        for i, x in enumerate(list(polynom)[1:]):
+        for i, x in enumerate(list(polynom)):
             # Жёский парсинг текста
             power = 0
             coef = 1
@@ -111,19 +146,22 @@ class Galois:
                 x, power = x.split("^")
             elif "x" in x:
                 power = 1
+            elif x.isdigit():
+                coef = x
             # print(f"coef={coef}, x={x}, power={power}, {-1 * int(coef)}")
 
-            coeffs[len(coeffs) - int(power) - 1] = -1 * int(coef) % self.p
+            # coeffs[len(coeffs) - int(power) - 1] = -1 * int(coef) % self.p
+            coeffs[len(coeffs) - int(power) - 1] = int(coef)
             
         return coeffs
             
     def _to_polynominal(self, coeffs: List[int]) -> str:
         """Переводит представление из коэффициентов в текстовый формат многочлена
 
-        Args:
+        Аргументы:
             coeffs (List[int]): Список коэффициентов
 
-        Returns:
+        Возвращает:
             str: Текстовое представление
         """
         result = []
