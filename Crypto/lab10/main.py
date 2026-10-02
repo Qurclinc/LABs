@@ -3,6 +3,11 @@ from constants import OUTPUT_DIR
 from utils import clear, encode_text, h
 
 def choose_lang():
+    """Вынесенная функция для выбора языка с клавиатуры
+
+    Возвращает:
+        str: Значение для параметра языка
+    """
     lang = ""
     while lang not in ("R", "E"):
         lang = input("Выберите язык ([E]ng/[R]us)")
@@ -63,6 +68,9 @@ def main():
                 except TypeError as ex:
                     print(str(ex))
                     continue
+                except KeyError:
+                    print("Ошибка файла с приватным ключом")
+                    continue
                 print("Сообщение успешно сохранено и подписано")
                 del rsa
             case 3:
@@ -77,15 +85,25 @@ def main():
                 p = int(input("Введите простое p (для функции h(M)): ")) if subchoice == 2 else None
                 msg_name = input("Введите название файла для чтения сообщения: ")
                 sign_name = input("Введите название файла для чтения подписи: ")
-                with (
-                    open(f"{OUTPUT_DIR}/{msg_name}", "r") as msg,
-                    open(f"{OUTPUT_DIR}/{sign_name}", "r") as sign
-                ):
-                    M = encode_text(msg.read(), lang=lang)
-                    S = int(sign.read())
-                    compare_to = h(M, p) if p else M
-                    rsa.load_pubkey()
-                    print("Подпись совпадает" if rsa.verify_sign(S, compare_to) else "Подпись отличается")
+                try:
+                    with (
+                        open(f"{OUTPUT_DIR}/{msg_name}", "r") as msg,
+                        open(f"{OUTPUT_DIR}/{sign_name}", "r") as sign
+                    ):
+                        M = encode_text(msg.read(), lang=lang)
+                        S = int(sign.read())
+                        compare_to = h(M, p) if p else M
+                        rsa.load_pubkey()
+                        print("Подпись совпадает" if rsa.verify_sign(S, compare_to) else "Подпись отличается")
+                except FileNotFoundError:
+                    print("Осутствует какой-либо из файлов: сообщение или подпись. Перепроверьте название")
+                    continue
+                except TypeError as ex:
+                    print(str(ex))
+                    continue
+                except KeyError:
+                    print("Ошибка файла с публичным ключом")
+                    continue
                 del rsa
             case 0:
                 print("Выход...")
