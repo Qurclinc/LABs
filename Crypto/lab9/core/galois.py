@@ -82,7 +82,7 @@ class Galois(Field):
         Возвращает:
             List[int]: Коэффициенты полинома
         """
-        return random.choice(self.all_coeffs[1:])
+        return random.choice(self.all_coeffs[2:-1])
         
     def _reduce(self, coeffs: List[int]):
         """Выполняет деление многочлена на неприводимый многочлен и возвращает остаток

@@ -1,3 +1,4 @@
+import random
 from typing import Tuple
 
 ALLOWED_PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] # После 29 у меня нет таблиц
@@ -35,7 +36,7 @@ def perform_finite(p):
 
     G = gf.g
     print(f"G = {G}")
-    a, b = 5, 7
+    a, b = random.randint(2, p - 2), random.randint(2, p - 2)
     print(f"a = {a}\nb = {b}")
 
     A = gf.pow(G, a)
